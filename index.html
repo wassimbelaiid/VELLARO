@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>VELLARO – Boutique de chaussures</title>
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+--bg:#f6f5f2;--surface:#fff;--text:#14130f;--muted:#6b6a63;--accent:#ff4d2e;--border:#e4e2dc}
+html{scroll-padding-top:env(safe-area-inset-top,0px);scroll-behavior:smooth}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){color-scheme:dark;--bg:#0f0f0e;--surface:#1b1a18;--text:#f3f1ea;--muted:#9b998f;--border:#2e2c28}}
+:root[data-theme="dark"]{color-scheme:dark;--bg:#0f0f0e;--surface:#1b1a18;--text:#f3f1ea;--muted:#9b998f;--border:#2e2c28}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.5}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--bg);z-index:10}
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;display:flex;justify-content:space-between;align-items:center;padding:14px 5vw;background:var(--bg);border-bottom:1px solid var(--border)}
+.logo{font-weight:800;letter-spacing:.18em;font-size:1.2rem}
+.logo span{color:var(--accent)}
+.cartbtn{display:flex;gap:8px;align-items:center;background:var(--text);color:var(--bg);border:0;border-radius:99px;padding:10px 18px;font-weight:600;cursor:pointer;font-size:.95rem}
+.cartbtn b{background:var(--accent);color:#fff;border-radius:99px;min-width:22px;padding:0 6px;text-align:center}
+.ship{font-size:.85rem;font-weight:600;color:var(--accent)}
+.fab{position:fixed;right:18px;bottom:calc(18px + env(safe-area-inset-bottom,0px));z-index:30;padding:14px 22px;box-shadow:0 8px 24px #0004}
+.sizes{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+.sizes button{min-width:40px;padding:7px 0;border-radius:8px;border:1px solid var(--border);background:var(--bg);color:var(--text);cursor:pointer;font-size:.85rem}
+.sizes button.on{background:var(--text);color:var(--bg);border-color:var(--text)}
+.sizes button:disabled{opacity:.35;text-decoration:line-through;cursor:not-allowed}
+.free{color:var(--accent);font-weight:700;margin:0;font-size:.95rem}
+.item{grid-template-columns:76px 1fr;gap:14px;padding:12px;margin-bottom:10px;background:var(--bg);border:1px solid var(--border);border-radius:16px}
+.item .img{padding:8px;border-radius:12px;align-self:start}
+.info{display:flex;flex-direction:column;gap:8px;min-width:0}
+.top,.bot{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.chip{align-self:flex-start;font-size:.75rem;background:var(--surface);border:1px solid var(--border);border-radius:99px;padding:2px 10px;color:var(--muted)}
+.rm{background:none;border:0;color:var(--muted);cursor:pointer;font-size:.95rem}
+.qty{margin:0}
+.summary{background:var(--bg);border:1px solid var(--border);border-radius:16px;padding:14px;margin:6px 0 16px;display:grid;gap:8px}
+.summary div{display:flex;justify-content:space-between;color:var(--muted)}
+.summary .tot{color:var(--text);font-weight:800;font-size:1.2rem;border-top:1px dashed var(--border);padding-top:10px}
+.ftitle{margin:4px 0 2px;font-size:1rem}
+.deliv{background:var(--bg);border:1px dashed var(--accent);border-radius:12px;padding:10px;text-align:center;font-weight:600;color:var(--accent);font-size:.9rem}
+.hero{padding:9vh 5vw 6vh;max-width:1200px;margin:auto;display:grid;gap:30px;grid-template-columns:1.1fr .9fr;align-items:center}
+.hero h1{font-size:clamp(2.4rem,6vw,4.6rem);line-height:1;margin:0 0 18px;letter-spacing:-.03em}
+.hero h1 em{font-style:normal;color:var(--accent)}
+.hero p{color:var(--muted);max-width:46ch;font-size:1.1rem}
+.cta{display:inline-block;margin-top:14px;background:var(--accent);color:#fff;padding:14px 28px;border-radius:99px;font-weight:700;text-decoration:none}
+.herobox{background:var(--surface);border:1px solid var(--border);border-radius:28px;padding:20px;transform:rotate(-3deg)}
+section{max-width:1200px;margin:auto;padding:30px 5vw 60px}
+h2{font-size:1.8rem;margin:0 0 22px;letter-spacing:-.02em}
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:22px}
+.filters button{border:1px solid var(--border);background:var(--surface);color:var(--text);padding:8px 16px;border-radius:99px;cursor:pointer;font-size:.9rem}
+.filters button.on{background:var(--text);color:var(--bg)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:20px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:22px;padding:16px;display:flex;flex-direction:column;transition:transform .2s}
+.card:hover{transform:translateY(-4px)}
+.img{border-radius:16px;padding:14px;margin-bottom:14px}
+.img svg{width:100%;height:auto;display:block}
+.card h3{margin:0;font-size:1.05rem}
+.cat{color:var(--muted);font-size:.85rem}
+.row{display:flex;justify-content:space-between;align-items:center;margin-top:12px;gap:8px}
+.price{font-weight:800;font-size:1.15rem}
+select,input,textarea{font:inherit;color:var(--text);background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:9px 10px;width:100%}
+.card select{width:auto}
+.add{background:var(--accent);color:#fff;border:0;border-radius:10px;padding:10px 14px;font-weight:700;cursor:pointer}
+footer{text-align:center;color:var(--muted);padding:30px 5vw 50px;font-size:.9rem}
+.overlay{position:fixed;inset:0;background:#0007;opacity:0;pointer-events:none;transition:.25s;z-index:40}
+.overlay.open{opacity:1;pointer-events:auto}
+aside{overflow-y:auto;position:fixed;top:0;right:0;height:100%;width:min(440px,100%);background:var(--surface);z-index:50;transform:translateX(100%);transition:.3s;display:flex;flex-direction:column;padding:calc(18px + env(safe-area-inset-top,0px)) 20px calc(18px + env(safe-area-inset-bottom,0px))}
+aside.open{transform:none}
+.ahead{display:flex;justify-content:space-between;align-items:center}
+.ahead h2{margin:0;font-size:1.3rem}
+.x{background:none;border:0;color:var(--text);font-size:1.6rem;cursor:pointer}
+.items{margin:14px 0}
+.item{display:grid;grid-template-columns:64px 1fr auto;gap:12px;align-items:center;padding:10px 0;border-bottom:1px solid var(--border)}
+.item .img{padding:4px;margin:0;border-radius:10px}
+.item small{color:var(--muted)}
+.qty{display:flex;gap:6px;align-items:center;margin-top:4px}
+.qty button{width:26px;height:26px;border-radius:8px;border:1px solid var(--border);background:var(--bg);color:var(--text);cursor:pointer}
+.empty{color:var(--muted);text-align:center;margin-top:40px}
+form{display:grid;gap:8px}
+.total{display:flex;justify-content:space-between;font-weight:800;font-size:1.15rem;margin:8px 0}
+.send{background:var(--accent);color:#fff;border:0;border-radius:12px;padding:14px;font-weight:700;font-size:1rem;cursor:pointer}
+.ghost{background:none;border:1px solid var(--border);color:var(--text);border-radius:12px;padding:10px;cursor:pointer}
+.note{color:var(--muted);font-size:.8rem;margin:0}
+.img:has(img),.img:has(video){background:#fff!important;padding:0;overflow:hidden;border-radius:16px}
+.img img,.img video{width:100%;aspect-ratio:1/1;object-fit:cover;object-position:center;display:block;border-radius:0;transform:scale(1.15);transition:transform .5s ease;cursor:zoom-in}
+.item .img:has(img){padding:0;border-radius:12px}
+.item .img img{aspect-ratio:1/1}
+.card .row:last-child{margin-top:auto;padding-top:12px}
+.old{color:var(--muted);font-weight:400;font-size:.9rem;margin-right:8px;text-decoration:line-through}
+.price{color:var(--accent)}
+.card{position:relative;box-shadow:0 2px 14px #0000000d;transition:transform .25s,box-shadow .25s}
+.card:hover{transform:translateY(-6px);box-shadow:0 18px 40px #0000002e}
+.card:hover .img img,.card:hover .img video{transform:scale(1.3)}
+.card h3{font-size:1.15rem}
+.item .img img{transform:none;cursor:default}
+.img{position:relative}
+.badge{position:absolute;top:10px;left:10px;z-index:2;background:var(--accent);color:#fff;font-weight:800;font-size:.8rem;padding:4px 10px;border-radius:99px}
+.add:hover{filter:brightness(1.1)}
+.lb{position:fixed;inset:0;background:#000d;display:none;align-items:center;justify-content:center;z-index:100;cursor:zoom-out}
+.lb.open{display:flex}
+.lb img{max-width:92vw;max-height:88vh;border-radius:16px;background:#fff}
+@media(max-width:760px){.hero{grid-template-columns:1fr}.herobox{transform:none}}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">VELLARO<span>.</span></div>
+  <span class="ship">🚚 Livraison gratuite</span>
+</header>
+
+<div class="hero">
+  <div>
+    <h1>Marchez avec <em>style</em>.</h1>
+    <p>Sneakers, running et classiques : une sélection moderne, confortable et prête à vous suivre partout.</p>
+    <a class="cta" href="#shop">Voir la collection</a>
+  </div>
+  <div class="herobox" id="herobox"></div>
+</div>
+
+<section id="shop">
+  <h2>Nos modèles</h2>
+  <div class="filters" id="filters"></div>
+  <div class="grid" id="grid"></div>
+</section>
+
+<footer>© 2026 VELLARO – Livraison gratuite · Paiement à la livraison</footer>
+
+<button class="cartbtn fab" id="open" aria-label="Ouvrir le panier">🛒 Panier <b id="count">0</b></button>
+<div class="overlay" id="ov"></div>
+<aside id="panel" aria-label="Panier">
+  <div class="ahead"><h2>Votre panier</h2><button class="x" id="close" aria-label="Fermer">×</button></div>
+  <div class="items" id="items"></div>
+  <div class="summary"><div><span>Sous-total</span><span id="sub">0 DT</span></div><div><span>🏠 Livraison à domicile</span><b class="free">Gratuite</b></div>
+  <div class="tot"><span>Total</span><span id="total">0 DT</span></div></div>
+  <form id="form" onsubmit="return false">
+    <h3 class="ftitle">Vos informations</h3>
+    <input id="nom" placeholder="Nom complet *" required>
+    <input id="tel" placeholder="Téléphone *" type="tel" required>
+    <input id="adr" placeholder="Adresse de livraison *" required>
+    <textarea id="rem" rows="2" placeholder="Remarque (facultatif)"></textarea>
+    <div class="deliv">🏠 Livraison à domicile gratuite</div>
+    <button class="send" id="send" type="button">Confirmer la commande ✓</button>
+    <button class="ghost" id="copy" type="button">Copier la commande</button>
+    <p class="note" id="msg">Votre application e-mail s’ouvrira avec la commande prête à envoyer.</p>
+  </form>
+</aside>
+
+<div class="lb" id="lb"><img id="lbimg" alt="Produit"></div>
+
+<script>
+const EMAIL_VENDEUR = "freefiretn20@gmail.com";
+const FORMSPREE = "https://formspree.io/f/xzeelrbk";
+const DEVISE = "DT";
+const PRODUITS = [
+  {id:1,nom:"Classic Noir",cat:"Classiques",ancien:99,prix:69,c:"#ff4d2e",bg:"#ffe3dc",img:"images/1.jpg",video:""},
+  {id:2,nom:"Classic Blanc",cat:"Classiques",ancien:99,prix:69,c:"#2f6bff",bg:"#dfe8ff",img:"images/2.jpg",video:""},
+  {id:3,nom:"Classic Bleu",cat:"Classiques",ancien:99,prix:69,c:"#1d1d1b",bg:"#e8e6df",img:"images/3.jpg",video:""},
+  {id:4,nom:"Classic Marron",cat:"Classiques",ancien:99,prix:69,c:"#18b36b",bg:"#d9f5e7",img:"images/4.jpg",video:""}
+];
+const TAILLES = [40,41,42,43,44,45];
+const RUPTURE = {1:[45],2:[44],3:[41],4:[45]}; // tailles indisponibles par produit
+const sel = {};
+let panier = [], filtre = "Tous";
+
+const shoe = c => `<svg viewBox="0 0 200 100" role="img" aria-label="Chaussure"><path d="M8 78h184q4 0 4-6v-6H8z" fill="#fff" stroke="#0002"/><path d="M14 66c0-16 8-22 20-24l24-4c8-2 12-10 20-12l22-2c8 6 18 16 40 22 28 4 50 10 50 20z" fill="${c}"/><path d="M60 40l10 8M74 36l10 8M88 32l10 8" stroke="#fff" stroke-width="3" stroke-linecap="round"/><path d="M40 62c30-4 60-2 120 4" stroke="#fff8" stroke-width="3" fill="none"/></svg>`;
+// Chaque produit : img = lien de la photo, video = lien de la vidéo (laisser "" si aucune).
+// Les liens peuvent être des fichiers locaux (images/xxx.jpg, videos/xxx.mp4) ou des URL https://...
+// Si le lien est cassé ou vide, le dessin de la chaussure s'affiche à la place.
+const repli = (el,id) => { const p = PRODUITS.find(x=>x.id===id); el.outerHTML = shoe(p.c); };
+const media = p => p.video
+  ? `<video src="${p.video}" ${p.img?`poster="${p.img}"`:""} autoplay muted loop playsinline onerror="repli(this,${p.id})"></video>`
+  : p.img ? `<img src="${p.img}" alt="${p.nom}" loading="lazy" onerror="repli(this,${p.id})">` : shoe(p.c);
+const vignette = p => p.img ? `<img src="${p.img}" alt="${p.nom}" onerror="repli(this,${p.id})">` : shoe(p.c);
+const fmt = n => n + " " + DEVISE;
+const $ = id => document.getElementById(id);
+
+function rendreFiltres(){
+  const cats = ["Tous", ...new Set(PRODUITS.map(p=>p.cat))];
+  $("filters").innerHTML = cats.map(c=>`<button class="${c===filtre?"on":""}" data-c="${c}">${c}</button>`).join("");
+  $("filters").querySelectorAll("button").forEach(b=>b.onclick=()=>{filtre=b.dataset.c;rendreFiltres();rendreGrille()});
+}
+function rendreGrille(){
+  PRODUITS.forEach(p=>{if(sel[p.id]===undefined)sel[p.id]=TAILLES.find(t=>!(RUPTURE[p.id]||[]).includes(t))});
+  $("grid").innerHTML = PRODUITS.filter(p=>filtre==="Tous"||p.cat===filtre).map(p=>`
+  <div class="card">
+    <div class="img" style="background:${p.bg}">${p.ancien?`<span class="badge">-${Math.round((1-p.prix/p.ancien)*100)}%</span>`:""}${media(p)}</div>
+    <h3>${p.nom}</h3><div class="cat">${p.cat}</div>
+    <div class="row"><span class="price">${p.ancien?`<s class="old">${fmt(p.ancien)}</s>`:""}${fmt(p.prix)}</span><span class="cat">Pointure ${sel[p.id]}</span></div>
+    <div class="sizes">${TAILLES.map(t=>{const r=(RUPTURE[p.id]||[]).includes(t);return `<button data-id="${p.id}" data-t="${t}" class="${sel[p.id]===t?'on':''}" ${r?'disabled title="Indisponible"':''}>${t}</button>`}).join("")}</div>
+    <div class="row"><button class="add" data-id="${p.id}" style="width:100%">Ajouter au panier</button></div>
+  </div>`).join("");
+  $("grid").querySelectorAll(".add").forEach(b=>b.onclick=()=>ajouter(+b.dataset.id));
+  $("grid").querySelectorAll(".sizes button:not(:disabled)").forEach(b=>b.onclick=()=>{sel[+b.dataset.id]=+b.dataset.t;rendreGrille()});
+  $("grid").querySelectorAll(".img img").forEach(i=>i.onclick=()=>{$("lbimg").src=i.src;$("lb").classList.add("open")});
+}
+function ajouter(id){
+  const t = sel[id];
+  const l = panier.find(x=>x.id===id && x.t===t);
+  l ? l.q++ : panier.push({id,t,q:1});
+  rendrePanier(); ouvrir(true);
+}
+function changer(i,d){ panier[i].q += d; if(panier[i].q<=0) panier.splice(i,1); rendrePanier(); }
+function total(){ return panier.reduce((s,l)=>s+PRODUITS.find(p=>p.id===l.id).prix*l.q,0); }
+function rendrePanier(){
+  $("count").textContent = panier.reduce((s,l)=>s+l.q,0);
+  $("total").textContent = fmt(total());
+  $("sub").textContent = fmt(total());
+  $("items").innerHTML = panier.length ? panier.map((l,i)=>{
+    const p = PRODUITS.find(x=>x.id===l.id);
+    return `<div class="item"><div class="img" style="background:${p.bg}">${vignette(p)}</div>
+    <div class="info"><div class="top"><b>${p.nom}</b><button class="rm" data-i="${i}" aria-label="Retirer">✕</button></div><span class="chip">Pointure ${l.t} · ${fmt(p.prix)}</span><div class="bot">
+    <div class="qty"><button data-i="${i}" data-d="-1">−</button>${l.q}<button data-i="${i}" data-d="1">+</button></div>
+    <b>${fmt(p.prix*l.q)}</b></div></div></div>`;}).join("") : `<p class="empty">Votre panier est vide.</p>`;
+  $("items").querySelectorAll(".qty button").forEach(b=>b.onclick=()=>changer(+b.dataset.i,+b.dataset.d));
+  $("items").querySelectorAll(".rm").forEach(b=>b.onclick=()=>{panier.splice(+b.dataset.i,1);rendrePanier()});
+}
+function ouvrir(o){ $("panel").classList.toggle("open",o); $("ov").classList.toggle("open",o); }
+function texteCommande(){
+  const lignes = panier.map(l=>{const p=PRODUITS.find(x=>x.id===l.id);
+    return `- ${p.nom} | pointure ${l.t} | x${l.q} | ${fmt(p.prix*l.q)}`;}).join("\n");
+  return `Nouvelle commande\n\n${lignes}\n\nLivraison à domicile : Gratuite\nTotal : ${fmt(total())}\n\nClient : ${$("nom").value}\nTéléphone : ${$("tel").value}\nAdresse : ${$("adr").value}\nRemarque : ${$("rem").value.trim()||"-"}`;
+}
+function dire(t,ok){ const m=$("msg"); m.textContent=t; m.style.color = ok ? "#18b36b" : "var(--accent)"; m.style.fontWeight="700"; m.scrollIntoView({behavior:"smooth",block:"center"}); }
+function valide(){
+  if(!panier.length){ dire("Ajoutez d’abord un article au panier."); return false; }
+  if(!$("nom").value.trim()||!$("tel").value.trim()||!$("adr").value.trim()){ dire("Le nom, le téléphone et l’adresse sont obligatoires."); return false; }
+  return true;
+}
+$("send").onclick = async () => {
+  if(!valide()) return;
+  const btn = $("send");
+  btn.disabled = true; btn.textContent = "Envoi en cours…";
+  try{
+    const r = await fetch(FORMSPREE, {
+      method:"POST",
+      headers:{"Content-Type":"application/json","Accept":"application/json"},
+      body: JSON.stringify({
+        _subject: "Nouvelle commande – " + $("nom").value,
+        nom: $("nom").value,
+        telephone: $("tel").value,
+        adresse: $("adr").value,
+        remarque: $("rem").value.trim() || "-",
+        commande: texteCommande(),
+        total: fmt(total())
+      })
+    });
+    if(!r.ok) throw new Error("HTTP " + r.status);
+    panier = []; rendrePanier(); $("form").reset();
+    dire("✅ Commande envoyée ! Nous vous appelons bientôt pour confirmer la livraison à domicile gratuite.", true);
+  }catch(e){
+    // Secours : ouvrir l'application e-mail avec la commande prête
+    const url = `mailto:${EMAIL_VENDEUR}?subject=${encodeURIComponent("Nouvelle commande – "+$("nom").value)}&body=${encodeURIComponent(texteCommande())}`;
+    dire("L’envoi automatique a échoué (" + e.message + "). Votre application e-mail va s’ouvrir.");
+    const a = document.createElement("a"); a.href = url; document.body.appendChild(a); a.click(); a.remove();
+  }
+  btn.disabled = false; btn.textContent = "Confirmer la commande ✓";
+};
+$("copy").onclick = async () => {
+  if(!valide()) return;
+  try{ await navigator.clipboard.writeText(texteCommande()); $("msg").textContent="Commande copiée ✔"; }
+  catch(e){ $("msg").textContent="Copie impossible : sélectionnez le texte manuellement."; }
+};
+$("open").onclick = () => ouvrir(true);
+$("close").onclick = $("ov").onclick = () => ouvrir(false);
+$("herobox").innerHTML = `<img src="images/0.jpg" alt="Collection" style="width:100%;display:block;border-radius:16px">`;
+$("lb").onclick = () => $("lb").classList.remove("open");
+document.addEventListener("keydown", e => { if(e.key==="Escape") $("lb").classList.remove("open"); });
+rendreFiltres(); rendreGrille(); rendrePanier();
+</script>
+</body>
+</html>
